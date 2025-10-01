@@ -1,7 +1,7 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types';
-import { delay } from '../../utils';
-import { acquireLua } from './lua';
+import type { RedisClient } from '../../types.ts';
+import { delay } from '../../utils/index.ts';
+import { acquireLua } from './lua.ts';
 
 const debug = createDebug('redis-semaphore:semaphore:acquire');
 

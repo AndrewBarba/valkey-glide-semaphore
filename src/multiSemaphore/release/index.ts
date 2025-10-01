@@ -1,6 +1,6 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types';
-import { releaseLua } from './lua';
+import type { RedisClient } from '../../types.ts';
+import { releaseLua } from './lua.ts';
 
 const debug = createDebug('redis-semaphore:multi-semaphore:release');
 

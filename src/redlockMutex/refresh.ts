@@ -1,9 +1,9 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import { expireIfEqualLua } from '../mutex/refresh';
-import { delIfEqualLua } from '../mutex/release';
-import type { RedisClient } from '../types';
-import { getQuorum, smartSum } from '../utils/redlock';
+import { expireIfEqualLua } from '../mutex/refresh.ts';
+import { delIfEqualLua } from '../mutex/release.ts';
+import type { RedisClient } from '../types.ts';
+import { getQuorum, smartSum } from '../utils/redlock.ts';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:refresh');
 
@@ -17,7 +17,7 @@ export async function refreshRedlockMutex(
   const quorum = getQuorum(clients.length);
   let promises = clients.map((client) =>
     expireIfEqualLua(client, [key, identifier, lockTimeout])
-      .then((result) => +result)
+      .then((result: number) => +result)
       .catch(() => 0),
   );
   const results = await Promise.all(promises);
@@ -28,13 +28,13 @@ export async function refreshRedlockMutex(
     if (refreshedCount < clients.length) {
       debug(key, identifier, 'try to acquire on failed nodes');
       promises = results
-        .reduce<RedisClient[]>((failedClients, result, index) => {
+        .reduce<RedisClient[]>((failedClients: RedisClient[], result: number, index: number) => {
           if (!result) {
             failedClients.push(clients[index]);
           }
           return failedClients;
         }, [])
-        .map((client) =>
+        .map((client: RedisClient) =>
           client
             .set(key, identifier, {
               conditionalSet: 'onlyIfDoesNotExist',
@@ -43,7 +43,7 @@ export async function refreshRedlockMutex(
                 type: TimeUnit.Milliseconds,
               },
             })
-            .then((result) => (result === 'OK' ? 1 : 0))
+            .then((result: any) => (result === 'OK' ? 1 : 0))
             .catch(() => 0),
         );
       const acquireResults = await Promise.all(promises);

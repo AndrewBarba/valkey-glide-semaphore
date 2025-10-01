@@ -1,9 +1,9 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import { delIfEqualLua } from '../mutex/release';
-import type { RedisClient } from '../types';
-import { delay } from '../utils';
-import { getQuorum, smartSum } from '../utils/redlock';
+import { delIfEqualLua } from '../mutex/release.ts';
+import type { RedisClient } from '../types.ts';
+import { delay } from '../utils/index.ts';
+import { getQuorum, smartSum } from '../utils/redlock.ts';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:acquire');
 
@@ -35,7 +35,7 @@ export async function acquireRedlockMutex(
             type: TimeUnit.Milliseconds,
           },
         })
-        .then((result) => (result === 'OK' ? 1 : 0))
+        .then((result: any) => (result === 'OK' ? 1 : 0))
         .catch(() => 0),
     );
     const results = await Promise.all(promises);

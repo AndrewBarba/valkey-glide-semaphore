@@ -1,7 +1,7 @@
 import createDebug from 'debug';
-import { delIfEqualLua } from '../mutex/release';
+import { delIfEqualLua } from '../mutex/release.ts';
 
-import type { RedisClient } from '../types';
+import type { RedisClient } from '../types.ts';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:release');
 

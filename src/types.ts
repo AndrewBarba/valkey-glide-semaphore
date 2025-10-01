@@ -1,6 +1,6 @@
 import type { GlideClient } from '@valkey/valkey-glide';
-import type LostLockError from './errors/LostLockError';
-import type { Lock } from './Lock';
+import type LostLockError from './errors/LostLockError.ts';
+import type { Lock } from './Lock.ts';
 
 /**
  * ioredis-like Redis client

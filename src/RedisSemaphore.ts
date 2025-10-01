@@ -1,8 +1,8 @@
-import RedisMutex from './RedisMutex';
-import { acquireSemaphore } from './semaphore/acquire';
-import { refreshSemaphore } from './semaphore/refresh';
-import { releaseSemaphore } from './semaphore/release';
-import type { LockOptions, RedisClient } from './types';
+import RedisMutex from './RedisMutex.ts';
+import { acquireSemaphore } from './semaphore/acquire/index.ts';
+import { refreshSemaphore } from './semaphore/refresh/index.ts';
+import { releaseSemaphore } from './semaphore/release.ts';
+import type { LockOptions, RedisClient } from './types.ts';
 
 export default class RedisSemaphore extends RedisMutex {
   protected _kind = 'semaphore';

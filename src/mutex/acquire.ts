@@ -1,7 +1,7 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import type { RedisClient } from '../types';
-import { delay } from '../utils';
+import type { RedisClient } from '../types.ts';
+import { delay } from '../utils/index.ts';
 
 const debug = createDebug('redis-semaphore:mutex:acquire');
 

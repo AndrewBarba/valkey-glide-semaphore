@@ -1,6 +1,6 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types';
-import { refreshLua } from './lua';
+import type { RedisClient } from '../../types.ts';
+import { refreshLua } from './lua.ts';
 
 const debug = createDebug('redis-semaphore:semaphore:refresh');
 

@@ -1,8 +1,8 @@
-import { acquireSemaphore } from './multiSemaphore/acquire';
-import { refreshSemaphore } from './multiSemaphore/refresh';
-import { releaseSemaphore } from './multiSemaphore/release';
-import RedisSemaphore from './RedisSemaphore';
-import type { LockOptions, RedisClient } from './types';
+import { acquireSemaphore } from './multiSemaphore/acquire/index.ts';
+import { refreshSemaphore } from './multiSemaphore/refresh/index.ts';
+import { releaseSemaphore } from './multiSemaphore/release/index.ts';
+import RedisSemaphore from './RedisSemaphore.ts';
+import type { LockOptions, RedisClient } from './types.ts';
 
 export default class RedisMultiSemaphore extends RedisSemaphore {
   protected _kind = 'multi-semaphore';

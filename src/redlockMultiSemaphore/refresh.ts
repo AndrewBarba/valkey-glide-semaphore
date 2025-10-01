@@ -1,9 +1,9 @@
 import createDebug from 'debug';
-import { acquireLua } from '../multiSemaphore/acquire/lua';
-import { refreshLua } from '../multiSemaphore/refresh/lua';
-import { releaseLua } from '../multiSemaphore/release/lua';
-import type { RedisClient } from '../types';
-import { getQuorum, smartSum } from '../utils/redlock';
+import { acquireLua } from '../multiSemaphore/acquire/lua.ts';
+import { refreshLua } from '../multiSemaphore/refresh/lua.ts';
+import { releaseLua } from '../multiSemaphore/release/lua.ts';
+import type { RedisClient } from '../types.ts';
+import { getQuorum, smartSum } from '../utils/redlock.ts';
 
 const debug = createDebug('redis-semaphore:redlock-semaphore:refresh');
 
@@ -25,7 +25,7 @@ export async function refreshRedlockMultiSemaphore(
   const quorum = getQuorum(clients.length);
   let promises = clients.map((client) =>
     refreshLua(client, [key, limit, permits, identifier, lockTimeout, now])
-      .then((result) => +result)
+      .then((result: number) => +result)
       .catch(() => 0),
   );
   const results = await Promise.all(promises);
@@ -36,15 +36,15 @@ export async function refreshRedlockMultiSemaphore(
     if (refreshedCount < clients.length) {
       debug(key, identifier, 'try to acquire on failed nodes');
       promises = results
-        .reduce<RedisClient[]>((failedClients, result, index) => {
+        .reduce<RedisClient[]>((failedClients: RedisClient[], result: number, index: number) => {
           if (!result) {
             failedClients.push(clients[index]);
           }
           return failedClients;
         }, [])
-        .map((client) =>
+        .map((client: RedisClient) =>
           acquireLua(client, [key, limit, permits, identifier, lockTimeout, now])
-            .then((result) => +result)
+            .then((result: number) => +result)
             .catch(() => 0),
         );
       const acquireResults = await Promise.all(promises);

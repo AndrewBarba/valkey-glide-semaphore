@@ -2,6 +2,7 @@
   "name": "valkey-glide-semaphore",
   "version": "1.0.0",
   "description": "Distributed mutex and semaphore based on Valkey",
+  "type": "module",
   "keywords": [
     "valkey",
     "redlock",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
+    "@tsconfig/node22": "^22.0.2",
     "@types/debug": "^4.1.12",
     "@valkey/valkey-glide": "^2.1.0",
     "typescript": "^5.9.3"

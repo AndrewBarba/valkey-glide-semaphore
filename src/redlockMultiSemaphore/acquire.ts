@@ -1,8 +1,8 @@
 import createDebug from 'debug';
-import { acquireLua } from '../multiSemaphore/acquire/lua';
-import type { RedisClient } from '../types';
-import { delay } from '../utils';
-import { getQuorum, smartSum } from '../utils/redlock';
+import { acquireLua } from '../multiSemaphore/acquire/lua.ts';
+import type { RedisClient } from '../types.ts';
+import { delay } from '../utils/index.ts';
+import { getQuorum, smartSum } from '../utils/redlock.ts';
 
 const debug = createDebug('redis-semaphore:redlock-multi-semaphore:acquire');
 
@@ -30,7 +30,7 @@ export async function acquireRedlockMultiSemaphore(
     debug(key, identifier, 'attempt', attempt);
     let promises = clients.map((client) =>
       acquireLua(client, [key, limit, permits, identifier, lockTimeout, now])
-        .then((result) => +result)
+        .then((result: number) => +result)
         .catch(() => 0),
     );
     const results = await Promise.all(promises);

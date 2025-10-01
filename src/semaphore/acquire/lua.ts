@@ -1,4 +1,4 @@
-import { createEval } from '../../utils/index';
+import { createEval } from '../../utils/index.ts';
 
 export const acquireLua = createEval<[string, number, string, number, number], 0 | 1>(
   `
