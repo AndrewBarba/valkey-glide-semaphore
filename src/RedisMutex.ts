@@ -1,8 +1,8 @@
-import { Lock } from './Lock.ts';
-import { acquireMutex } from './mutex/acquire.ts';
-import { refreshMutex } from './mutex/refresh.ts';
-import { releaseMutex } from './mutex/release.ts';
-import type { LockOptions, RedisClient } from './types.ts';
+import { Lock } from './Lock.js';
+import { acquireMutex } from './mutex/acquire.js';
+import { refreshMutex } from './mutex/refresh.js';
+import { releaseMutex } from './mutex/release.js';
+import type { LockOptions, RedisClient } from './types.js';
 
 export default class RedisMutex extends Lock {
   protected _kind = 'mutex';

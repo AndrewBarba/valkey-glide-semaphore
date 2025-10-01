@@ -1,8 +1,8 @@
-import RedlockMutex from './RedlockMutex.ts';
-import { acquireRedlockSemaphore } from './redlockSemaphore/acquire.ts';
-import { refreshRedlockSemaphore } from './redlockSemaphore/refresh.ts';
-import { releaseRedlockSemaphore } from './redlockSemaphore/release.ts';
-import type { LockOptions, RedisClient } from './types.ts';
+import RedlockMutex from './RedlockMutex.js';
+import { acquireRedlockSemaphore } from './redlockSemaphore/acquire.js';
+import { refreshRedlockSemaphore } from './redlockSemaphore/refresh.js';
+import { releaseRedlockSemaphore } from './redlockSemaphore/release.js';
+import type { LockOptions, RedisClient } from './types.js';
 
 export default class RedlockSemaphore extends RedlockMutex {
   protected _kind = 'redlock-semaphore';

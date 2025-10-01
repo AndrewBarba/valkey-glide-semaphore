@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Distributed mutex and semaphore based on Valkey",
   "type": "module",
-  "main": "./src/index.ts",
+  "main": "./dist/src/index.js",
   "keywords": [
     "valkey",
     "redlock",
@@ -37,7 +37,7 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
+    "build": "tsc",
     "lint:check": "biome check --write",
     "lint:format": "biome format --write",
     "lint": "biome ci"

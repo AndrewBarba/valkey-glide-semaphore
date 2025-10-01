@@ -1,6 +1,6 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../types.ts';
-import { createEval } from '../utils/index.ts';
+import type { RedisClient } from '../types.js';
+import { createEval } from '../utils/index.js';
 
 const debug = createDebug('redis-semaphore:mutex:refresh');
 

@@ -1,6 +1,6 @@
 import { Script } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import type { RedisClient } from '../types.ts';
+import type { RedisClient } from '../types.js';
 
 const debug = createDebug('redis-semaphore:eval');
 

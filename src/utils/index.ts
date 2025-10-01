@@ -1,4 +1,4 @@
-import createEval from './createEval.ts';
+import createEval from './createEval.js';
 
 export { createEval };
 

@@ -1,9 +1,9 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import { delIfEqualLua } from '../mutex/release.ts';
-import type { RedisClient } from '../types.ts';
-import { delay } from '../utils/index.ts';
-import { getQuorum, smartSum } from '../utils/redlock.ts';
+import { delIfEqualLua } from '../mutex/release.js';
+import type { RedisClient } from '../types.js';
+import { delay } from '../utils/index.js';
+import { getQuorum, smartSum } from '../utils/redlock.js';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:acquire');
 

@@ -1,9 +1,9 @@
 import * as crypto from 'node:crypto';
 import createDebug from 'debug';
-import LostLockError from './errors/LostLockError.ts';
-import TimeoutError from './errors/TimeoutError.ts';
-import { defaultOnLockLost, defaultTimeoutOptions } from './misc.ts';
-import type { AcquireOptions, LockLostCallback, LockOptions } from './types.ts';
+import LostLockError from './errors/LostLockError.js';
+import TimeoutError from './errors/TimeoutError.js';
+import { defaultOnLockLost, defaultTimeoutOptions } from './misc.js';
+import type { AcquireOptions, LockLostCallback, LockOptions } from './types.js';
 
 const REFRESH_INTERVAL_COEF = 0.8;
 

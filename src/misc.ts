@@ -1,4 +1,4 @@
-import type LostLockError from './errors/LostLockError.ts';
+import type LostLockError from './errors/LostLockError.js';
 
 export const defaultTimeoutOptions = {
   lockTimeout: 10000,

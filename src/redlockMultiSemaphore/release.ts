@@ -1,6 +1,6 @@
 import createDebug from 'debug';
-import { releaseLua } from '../multiSemaphore/release/lua.ts';
-import type { RedisClient } from '../types.ts';
+import { releaseLua } from '../multiSemaphore/release/lua.js';
+import type { RedisClient } from '../types.js';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:release');
 
@@ -13,5 +13,5 @@ export async function releaseRedlockMultiSemaphore(
   debug(key, identifier);
   const promises = clients.map((client) => releaseLua(client, [key, permits, identifier]).catch(() => 0));
   const results = await Promise.all(promises);
-  debug('results', results);
+  debug('resu.js', results);
 }

@@ -2,12 +2,11 @@
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     "rootDir": "./",
+    "outDir": "dist",
     "moduleDetection": "force",
     "isolatedModules": true,
-    "resolvePackageJsonImports": false,
     "erasableSyntaxOnly": true,
-    "noEmit": true,
-    "allowImportingTsExtensions": true
+    "declaration": true
   },
   "include": ["src"]
 }

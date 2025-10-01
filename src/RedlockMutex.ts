@@ -1,9 +1,9 @@
-import { Lock } from './Lock.ts';
-import { defaultTimeoutOptions } from './misc.ts';
-import { acquireRedlockMutex } from './redlockMutex/acquire.ts';
-import { refreshRedlockMutex } from './redlockMutex/refresh.ts';
-import { releaseRedlockMutex } from './redlockMutex/release.ts';
-import type { LockOptions, RedisClient } from './types.ts';
+import { Lock } from './Lock.js';
+import { defaultTimeoutOptions } from './misc.js';
+import { acquireRedlockMutex } from './redlockMutex/acquire.js';
+import { refreshRedlockMutex } from './redlockMutex/refresh.js';
+import { releaseRedlockMutex } from './redlockMutex/release.js';
+import type { LockOptions, RedisClient } from './types.js';
 
 export default class RedlockMutex extends Lock {
   protected _kind = 'redlock-mutex';

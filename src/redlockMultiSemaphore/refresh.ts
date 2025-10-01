@@ -1,9 +1,9 @@
 import createDebug from 'debug';
-import { acquireLua } from '../multiSemaphore/acquire/lua.ts';
-import { refreshLua } from '../multiSemaphore/refresh/lua.ts';
-import { releaseLua } from '../multiSemaphore/release/lua.ts';
-import type { RedisClient } from '../types.ts';
-import { getQuorum, smartSum } from '../utils/redlock.ts';
+import { acquireLua } from '../multiSemaphore/acquire/lua.js';
+import { refreshLua } from '../multiSemaphore/refresh/lua.js';
+import { releaseLua } from '../multiSemaphore/release/lua.js';
+import type { RedisClient } from '../types.js';
+import { getQuorum, smartSum } from '../utils/redlock.js';
 
 const debug = createDebug('redis-semaphore:redlock-semaphore:refresh');
 
@@ -29,7 +29,7 @@ export async function refreshRedlockMultiSemaphore(
       .catch(() => 0),
   );
   const results = await Promise.all(promises);
-  debug('results', results);
+  debug('resu.js', results);
   const refreshedCount = results.reduce(smartSum, 0);
   if (refreshedCount >= quorum) {
     debug(key, identifier, 'refreshed');
@@ -48,7 +48,7 @@ export async function refreshRedlockMultiSemaphore(
             .catch(() => 0),
         );
       const acquireResults = await Promise.all(promises);
-      debug(key, identifier, 'acquire on failed nodes results', acquireResults);
+      debug(key, identifier, 'acquire on failed nodes resu.js', acquireResults);
     }
     return true;
   }
