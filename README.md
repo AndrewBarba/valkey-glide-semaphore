@@ -1,3 +1,3 @@
 # valkey-glide-semaphore
 
-in progress
+Forked version of `redis-semaphore` designed for `@valkey/valkey-glide`
