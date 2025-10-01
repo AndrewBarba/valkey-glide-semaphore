@@ -1,6 +1,6 @@
 {
   "name": "valkey-glide-semaphore",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Distributed mutex and semaphore based on Valkey",
   "type": "module",
   "keywords": [
@@ -10,7 +10,13 @@
     "semaphore"
   ],
   "author": "Alexander Mochalin (horroshow@mail.ru)",
+  "contributors": [
+    "Andrew Barba (barba@hey.com)"
+  ],
   "license": "MIT",
+  "engines": {
+    "node": ">=22.18"
+  },
   "dependencies": {
     "debug": "^4.4.3"
   },
@@ -30,6 +36,9 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint:check": "biome check --write",
+    "lint:format": "biome format --write",
+    "lint": "biome ci"
   }
 }

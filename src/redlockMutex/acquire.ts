@@ -35,7 +35,7 @@ export async function acquireRedlockMutex(
             type: TimeUnit.Milliseconds,
           },
         })
-        .then((result: any) => (result === 'OK' ? 1 : 0))
+        .then((result) => (result === 'OK' ? 1 : 0))
         .catch(() => 0),
     );
     const results = await Promise.all(promises);

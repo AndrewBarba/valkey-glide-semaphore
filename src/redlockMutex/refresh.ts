@@ -43,7 +43,7 @@ export async function refreshRedlockMutex(
                 type: TimeUnit.Milliseconds,
               },
             })
-            .then((result: any) => (result === 'OK' ? 1 : 0))
+            .then((result) => (result === 'OK' ? 1 : 0))
             .catch(() => 0),
         );
       const acquireResults = await Promise.all(promises);
