@@ -2,10 +2,7 @@ import type { GlideClient } from '@valkey/valkey-glide';
 import type LostLockError from './errors/LostLockError.js';
 import type { Lock } from './Lock.js';
 
-/**
- * ioredis-like Redis client
- */
-export type RedisClient = GlideClient;
+export type { GlideClient };
 
 export type LockLostCallback = (this: Lock, err: LostLockError) => void;
 
