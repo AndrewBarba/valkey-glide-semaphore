@@ -2,14 +2,14 @@ import { Lock } from './Lock.js';
 import { acquireMutex } from './mutex/acquire.js';
 import { refreshMutex } from './mutex/refresh.js';
 import { releaseMutex } from './mutex/release.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedisMutex extends Lock {
   protected _kind = 'mutex';
   protected _key: string;
-  protected _client: RedisClient;
+  protected _client: GlideClient;
 
-  constructor(client: RedisClient, key: string, options?: LockOptions) {
+  constructor(client: GlideClient, key: string, options?: LockOptions) {
     super(options);
     if (!client) {
       throw new Error('"client" is required');

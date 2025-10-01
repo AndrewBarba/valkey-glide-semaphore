@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types.js';
+import type { GlideClient } from '../../types.js';
 import { releaseLua } from './lua.js';
 
 const debug = createDebug('redis-semaphore:multi-semaphore:release');
@@ -11,7 +11,7 @@ export interface Options {
 }
 
 export async function releaseSemaphore(
-  client: RedisClient,
+  client: GlideClient,
   key: string,
   permits: number,
   identifier: string,

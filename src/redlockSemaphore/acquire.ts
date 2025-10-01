@@ -1,6 +1,6 @@
 import createDebug from 'debug';
 import { acquireLua } from '../semaphore/acquire/lua.js';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { delay } from '../utils/index.js';
 import { getQuorum, smartSum } from '../utils/redlock.js';
 
@@ -15,7 +15,7 @@ export interface Options {
 }
 
 export async function acquireRedlockSemaphore(
-  clients: RedisClient[],
+  clients: GlideClient[],
   key: string,
   limit: number,
   options: Options,

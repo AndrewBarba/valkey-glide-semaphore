@@ -1,6 +1,6 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { delay } from '../utils/index.js';
 
 const debug = createDebug('redis-semaphore:mutex:acquire');
@@ -13,7 +13,7 @@ export interface Options {
   retryInterval: number;
 }
 
-export async function acquireMutex(client: RedisClient, key: string, options: Options): Promise<boolean> {
+export async function acquireMutex(client: GlideClient, key: string, options: Options): Promise<boolean> {
   const { identifier, lockTimeout, acquireTimeout, acquireAttemptsLimit, retryInterval } = options;
   let attempt = 0;
   const end = Date.now() + acquireTimeout;

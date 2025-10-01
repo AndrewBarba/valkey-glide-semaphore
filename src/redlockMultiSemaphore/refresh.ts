@@ -2,7 +2,7 @@ import createDebug from 'debug';
 import { acquireLua } from '../multiSemaphore/acquire/lua.js';
 import { refreshLua } from '../multiSemaphore/refresh/lua.js';
 import { releaseLua } from '../multiSemaphore/release/lua.js';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { getQuorum, smartSum } from '../utils/redlock.js';
 
 const debug = createDebug('redis-semaphore:redlock-semaphore:refresh');
@@ -13,7 +13,7 @@ interface Options {
 }
 
 export async function refreshRedlockMultiSemaphore(
-  clients: RedisClient[],
+  clients: GlideClient[],
   key: string,
   limit: number,
   permits: number,
@@ -36,13 +36,13 @@ export async function refreshRedlockMultiSemaphore(
     if (refreshedCount < clients.length) {
       debug(key, identifier, 'try to acquire on failed nodes');
       promises = results
-        .reduce<RedisClient[]>((failedClients: RedisClient[], result: number, index: number) => {
+        .reduce<GlideClient[]>((failedClients: GlideClient[], result: number, index: number) => {
           if (!result) {
             failedClients.push(clients[index]);
           }
           return failedClients;
         }, [])
-        .map((client: RedisClient) =>
+        .map((client: GlideClient) =>
           acquireLua(client, [key, limit, permits, identifier, lockTimeout, now])
             .then((result: number) => +result)
             .catch(() => 0),

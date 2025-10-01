@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types.js';
+import type { GlideClient } from '../../types.js';
 import { delay } from '../../utils/index.js';
 import { acquireLua } from './lua.js';
 
@@ -14,7 +14,7 @@ export interface Options {
 }
 
 export async function acquireSemaphore(
-  client: RedisClient,
+  client: GlideClient,
   key: string,
   limit: number,
   permits: number,

@@ -1,7 +1,7 @@
 import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
 import { delIfEqualLua } from '../mutex/release.js';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { delay } from '../utils/index.js';
 import { getQuorum, smartSum } from '../utils/redlock.js';
 
@@ -16,7 +16,7 @@ export interface Options {
 }
 
 export async function acquireRedlockMutex(
-  clients: RedisClient[],
+  clients: GlideClient[],
   key: string,
   options: Options,
 ): Promise<boolean> {

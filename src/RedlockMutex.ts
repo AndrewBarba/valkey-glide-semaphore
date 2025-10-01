@@ -3,14 +3,14 @@ import { defaultTimeoutOptions } from './misc.js';
 import { acquireRedlockMutex } from './redlockMutex/acquire.js';
 import { refreshRedlockMutex } from './redlockMutex/refresh.js';
 import { releaseRedlockMutex } from './redlockMutex/release.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedlockMutex extends Lock {
   protected _kind = 'redlock-mutex';
   protected _key: string;
-  protected _clients: RedisClient[];
+  protected _clients: GlideClient[];
 
-  constructor(clients: RedisClient[], key: string, options: LockOptions = defaultTimeoutOptions) {
+  constructor(clients: GlideClient[], key: string, options: LockOptions = defaultTimeoutOptions) {
     super(options);
     if (!clients || !Array.isArray(clients)) {
       throw new Error('"clients" array is required');

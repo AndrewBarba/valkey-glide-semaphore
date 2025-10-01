@@ -2,13 +2,13 @@ import RedisMutex from './RedisMutex.js';
 import { acquireSemaphore } from './semaphore/acquire/index.js';
 import { refreshSemaphore } from './semaphore/refresh/index.js';
 import { releaseSemaphore } from './semaphore/release.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedisSemaphore extends RedisMutex {
   protected _kind = 'semaphore';
   protected _limit: number;
 
-  constructor(client: RedisClient, key: string, limit: number, options?: LockOptions) {
+  constructor(client: GlideClient, key: string, limit: number, options?: LockOptions) {
     super(client, key, options);
     if (!limit) {
       throw new Error('"limit" is required');

@@ -2,13 +2,13 @@ import RedlockMutex from './RedlockMutex.js';
 import { acquireRedlockSemaphore } from './redlockSemaphore/acquire.js';
 import { refreshRedlockSemaphore } from './redlockSemaphore/refresh.js';
 import { releaseRedlockSemaphore } from './redlockSemaphore/release.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedlockSemaphore extends RedlockMutex {
   protected _kind = 'redlock-semaphore';
   protected _limit: number;
 
-  constructor(clients: RedisClient[], key: string, limit: number, options?: LockOptions) {
+  constructor(clients: GlideClient[], key: string, limit: number, options?: LockOptions) {
     super(clients, key, options);
     if (!limit) {
       throw new Error('"limit" is required');

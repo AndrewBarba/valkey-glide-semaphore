@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { createEval } from '../utils/index.js';
 
 const debug = createDebug('redis-semaphore:mutex:refresh');
@@ -23,7 +23,7 @@ export const expireIfEqualLua = createEval<[string, string, number], 0 | 1>(
 );
 
 export async function refreshMutex(
-  client: RedisClient,
+  client: GlideClient,
   key: string,
   identifier: string,
   lockTimeout: number,

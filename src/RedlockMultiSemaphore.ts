@@ -2,13 +2,13 @@ import RedlockSemaphore from './RedlockSemaphore.js';
 import { acquireRedlockMultiSemaphore } from './redlockMultiSemaphore/acquire.js';
 import { refreshRedlockMultiSemaphore } from './redlockMultiSemaphore/refresh.js';
 import { releaseRedlockMultiSemaphore } from './redlockMultiSemaphore/release.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedlockMultiSemaphore extends RedlockSemaphore {
   protected _kind = 'redlock-multi-semaphore';
   protected _permits: number;
 
-  constructor(clients: RedisClient[], key: string, limit: number, permits: number, options?: LockOptions) {
+  constructor(clients: GlideClient[], key: string, limit: number, permits: number, options?: LockOptions) {
     super(clients, key, limit, options);
     if (!permits) {
       throw new Error('"permits" is required');

@@ -2,13 +2,13 @@ import { acquireSemaphore } from './multiSemaphore/acquire/index.js';
 import { refreshSemaphore } from './multiSemaphore/refresh/index.js';
 import { releaseSemaphore } from './multiSemaphore/release/index.js';
 import RedisSemaphore from './RedisSemaphore.js';
-import type { LockOptions, RedisClient } from './types.js';
+import type { GlideClient, LockOptions } from './types.js';
 
 export default class RedisMultiSemaphore extends RedisSemaphore {
   protected _kind = 'multi-semaphore';
   protected _permits: number;
 
-  constructor(client: RedisClient, key: string, limit: number, permits: number, options?: LockOptions) {
+  constructor(client: GlideClient, key: string, limit: number, permits: number, options?: LockOptions) {
     super(client, key, limit, options);
     if (!permits) {
       throw new Error('"permits" is required');

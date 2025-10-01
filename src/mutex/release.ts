@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { createEval } from '../utils/index.js';
 
 const debug = createDebug('redis-semaphore:mutex:release');
@@ -18,7 +18,7 @@ export const delIfEqualLua = createEval<[string, string], 0 | 1>(
   1,
 );
 
-export async function releaseMutex(client: RedisClient, key: string, identifier: string): Promise<void> {
+export async function releaseMutex(client: GlideClient, key: string, identifier: string): Promise<void> {
   debug(key, identifier);
   const result = await delIfEqualLua(client, [key, identifier]);
   debug('result', typeof result, result);

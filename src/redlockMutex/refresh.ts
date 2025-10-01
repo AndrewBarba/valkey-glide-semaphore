@@ -2,13 +2,13 @@ import { TimeUnit } from '@valkey/valkey-glide';
 import createDebug from 'debug';
 import { expireIfEqualLua } from '../mutex/refresh.js';
 import { delIfEqualLua } from '../mutex/release.js';
-import type { RedisClient } from '../types.js';
+import type { GlideClient } from '../types.js';
 import { getQuorum, smartSum } from '../utils/redlock.js';
 
 const debug = createDebug('redis-semaphore:redlock-mutex:refresh');
 
 export async function refreshRedlockMutex(
-  clients: RedisClient[],
+  clients: GlideClient[],
   key: string,
   identifier: string,
   lockTimeout: number,
@@ -28,13 +28,13 @@ export async function refreshRedlockMutex(
     if (refreshedCount < clients.length) {
       debug(key, identifier, 'try to acquire on failed nodes');
       promises = results
-        .reduce<RedisClient[]>((failedClients: RedisClient[], result: number, index: number) => {
+        .reduce<GlideClient[]>((failedClients: GlideClient[], result: number, index: number) => {
           if (!result) {
             failedClients.push(clients[index]);
           }
           return failedClients;
         }, [])
-        .map((client: RedisClient) =>
+        .map((client: GlideClient) =>
           client
             .set(key, identifier, {
               conditionalSet: 'onlyIfDoesNotExist',

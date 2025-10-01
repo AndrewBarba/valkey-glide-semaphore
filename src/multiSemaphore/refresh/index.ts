@@ -1,5 +1,5 @@
 import createDebug from 'debug';
-import type { RedisClient } from '../../types.js';
+import type { GlideClient } from '../../types.js';
 import { refreshLua } from './lua.js';
 
 const debug = createDebug('redis-semaphore:multi-semaphore:refresh');
@@ -10,7 +10,7 @@ export interface Options {
 }
 
 export async function refreshSemaphore(
-  client: RedisClient,
+  client: GlideClient,
   key: string,
   limit: number,
   permits: number,
