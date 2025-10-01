@@ -1,13 +1,13 @@
-import MultiSemaphore from './RedisMultiSemaphore'
-import Mutex from './RedisMutex'
-import Semaphore from './RedisSemaphore'
-import RedlockMultiSemaphore from './RedlockMultiSemaphore'
-import RedlockMutex from './RedlockMutex'
-import RedlockSemaphore from './RedlockSemaphore'
-import LostLockError from './errors/LostLockError'
-import TimeoutError from './errors/TimeoutError'
+import LostLockError from './errors/LostLockError';
+import TimeoutError from './errors/TimeoutError';
+import MultiSemaphore from './RedisMultiSemaphore';
+import Mutex from './RedisMutex';
+import Semaphore from './RedisSemaphore';
+import RedlockMultiSemaphore from './RedlockMultiSemaphore';
+import RedlockMutex from './RedlockMutex';
+import RedlockSemaphore from './RedlockSemaphore';
 
-export { defaultTimeoutOptions } from './misc'
+export { defaultTimeoutOptions } from './misc';
 
 export {
   Mutex,
@@ -17,7 +17,7 @@ export {
   RedlockSemaphore,
   RedlockMultiSemaphore,
   LostLockError,
-  TimeoutError
-}
+  TimeoutError,
+};
 
-export type { LockLostCallback, TimeoutOptions, LockOptions } from './types'
+export type { LockLostCallback, LockOptions, TimeoutOptions } from './types';

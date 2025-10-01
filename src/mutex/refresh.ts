@@ -1,8 +1,8 @@
-import createDebug from 'debug'
-import { RedisClient } from '../types'
-import { createEval } from '../utils/index'
+import createDebug from 'debug';
+import type { RedisClient } from '../types';
+import { createEval } from '../utils/index';
 
-const debug = createDebug('redis-semaphore:mutex:refresh')
+const debug = createDebug('redis-semaphore:mutex:refresh');
 
 export const expireIfEqualLua = createEval<[string, string, number], 0 | 1>(
   `
@@ -19,19 +19,19 @@ export const expireIfEqualLua = createEval<[string, string, number], 0 | 1>(
 
   return 0
   `,
-  1
-)
+  1,
+);
 
 export async function refreshMutex(
   client: RedisClient,
   key: string,
   identifier: string,
-  lockTimeout: number
+  lockTimeout: number,
 ): Promise<boolean> {
-  debug(key, identifier)
-  const result = await expireIfEqualLua(client, [key, identifier, lockTimeout])
-  debug('result', typeof result, result)
+  debug(key, identifier);
+  const result = await expireIfEqualLua(client, [key, identifier, lockTimeout]);
+  debug('result', typeof result, result);
 
   // support options.stringNumbers
-  return +result === 1
+  return +result === 1;
 }

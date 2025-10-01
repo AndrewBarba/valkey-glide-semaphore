@@ -1,32 +1,28 @@
-import { Lock } from './Lock'
-import { defaultTimeoutOptions } from './misc'
-import { acquireRedlockMutex } from './redlockMutex/acquire'
-import { refreshRedlockMutex } from './redlockMutex/refresh'
-import { releaseRedlockMutex } from './redlockMutex/release'
-import { LockOptions, RedisClient } from './types'
+import { Lock } from './Lock';
+import { defaultTimeoutOptions } from './misc';
+import { acquireRedlockMutex } from './redlockMutex/acquire';
+import { refreshRedlockMutex } from './redlockMutex/refresh';
+import { releaseRedlockMutex } from './redlockMutex/release';
+import type { LockOptions, RedisClient } from './types';
 
 export default class RedlockMutex extends Lock {
-  protected _kind = 'redlock-mutex'
-  protected _key: string
-  protected _clients: RedisClient[]
+  protected _kind = 'redlock-mutex';
+  protected _key: string;
+  protected _clients: RedisClient[];
 
-  constructor(
-    clients: RedisClient[],
-    key: string,
-    options: LockOptions = defaultTimeoutOptions
-  ) {
-    super(options)
+  constructor(clients: RedisClient[], key: string, options: LockOptions = defaultTimeoutOptions) {
+    super(options);
     if (!clients || !Array.isArray(clients)) {
-      throw new Error('"clients" array is required')
+      throw new Error('"clients" array is required');
     }
     if (!key) {
-      throw new Error('"key" is required')
+      throw new Error('"key" is required');
     }
     if (typeof key !== 'string') {
-      throw new Error('"key" must be a string')
+      throw new Error('"key" must be a string');
     }
-    this._clients = clients
-    this._key = `mutex:${key}`
+    this._clients = clients;
+    this._key = `mutex:${key}`;
   }
 
   protected async _refresh(): Promise<boolean> {
@@ -34,19 +30,15 @@ export default class RedlockMutex extends Lock {
       this._clients,
       this._key,
       this._identifier,
-      this._acquireOptions.lockTimeout
-    )
+      this._acquireOptions.lockTimeout,
+    );
   }
 
   protected async _acquire(): Promise<boolean> {
-    return await acquireRedlockMutex(
-      this._clients,
-      this._key,
-      this._acquireOptions
-    )
+    return await acquireRedlockMutex(this._clients, this._key, this._acquireOptions);
   }
 
   protected async _release(): Promise<void> {
-    await releaseRedlockMutex(this._clients, this._key, this._identifier)
+    await releaseRedlockMutex(this._clients, this._key, this._identifier);
   }
 }

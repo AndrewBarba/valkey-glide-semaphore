@@ -1,12 +1,12 @@
-import createDebug from 'debug'
-import { RedisClient } from '../../types'
-import { refreshLua } from './lua'
+import createDebug from 'debug';
+import type { RedisClient } from '../../types';
+import { refreshLua } from './lua';
 
-const debug = createDebug('redis-semaphore:multi-semaphore:refresh')
+const debug = createDebug('redis-semaphore:multi-semaphore:refresh');
 
 export interface Options {
-  identifier: string
-  lockTimeout: number
+  identifier: string;
+  lockTimeout: number;
 }
 
 export async function refreshSemaphore(
@@ -14,19 +14,12 @@ export async function refreshSemaphore(
   key: string,
   limit: number,
   permits: number,
-  options: Options
+  options: Options,
 ): Promise<boolean> {
-  const { identifier, lockTimeout } = options
-  const now = Date.now()
-  debug(key, identifier, now)
-  const result = await refreshLua(client, [
-    key,
-    limit,
-    permits,
-    identifier,
-    lockTimeout,
-    now
-  ])
-  debug('result', typeof result, result)
-  return result === 1
+  const { identifier, lockTimeout } = options;
+  const now = Date.now();
+  debug(key, identifier, now);
+  const result = await refreshLua(client, [key, limit, permits, identifier, lockTimeout, now]);
+  debug('result', typeof result, result);
+  return result === 1;
 }

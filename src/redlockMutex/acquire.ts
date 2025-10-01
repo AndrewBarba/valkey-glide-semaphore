@@ -1,54 +1,52 @@
-import createDebug from 'debug'
-import { delIfEqualLua } from '../mutex/release'
-import { RedisClient } from '../types'
-import { delay } from '../utils'
-import { getQuorum, smartSum } from '../utils/redlock'
+import { TimeUnit } from '@valkey/valkey-glide';
+import createDebug from 'debug';
+import { delIfEqualLua } from '../mutex/release';
+import type { RedisClient } from '../types';
+import { delay } from '../utils';
+import { getQuorum, smartSum } from '../utils/redlock';
 
-const debug = createDebug('redis-semaphore:redlock-mutex:acquire')
+const debug = createDebug('redis-semaphore:redlock-mutex:acquire');
 
 export interface Options {
-  identifier: string
-  lockTimeout: number
-  acquireTimeout: number
-  acquireAttemptsLimit: number
-  retryInterval: number
+  identifier: string;
+  lockTimeout: number;
+  acquireTimeout: number;
+  acquireAttemptsLimit: number;
+  retryInterval: number;
 }
 
 export async function acquireRedlockMutex(
   clients: RedisClient[],
   key: string,
-  options: Options
+  options: Options,
 ): Promise<boolean> {
-  const {
-    identifier,
-    lockTimeout,
-    acquireTimeout,
-    acquireAttemptsLimit,
-    retryInterval
-  } = options
-  let attempt = 0
-  const end = Date.now() + acquireTimeout
-  const quorum = getQuorum(clients.length)
+  const { identifier, lockTimeout, acquireTimeout, acquireAttemptsLimit, retryInterval } = options;
+  let attempt = 0;
+  const end = Date.now() + acquireTimeout;
+  const quorum = getQuorum(clients.length);
   while (Date.now() < end && ++attempt <= acquireAttemptsLimit) {
-    debug(key, identifier, 'attempt', attempt)
-    const promises = clients.map(client =>
+    debug(key, identifier, 'attempt', attempt);
+    let promises = clients.map((client) =>
       client
-        .set(key, identifier, 'PX', lockTimeout, 'NX')
-        .then(result => (result === 'OK' ? 1 : 0))
-        .catch(() => 0)
-    )
-    const results = await Promise.all(promises)
+        .set(key, identifier, {
+          conditionalSet: 'onlyIfDoesNotExist',
+          expiry: {
+            count: lockTimeout,
+            type: TimeUnit.Milliseconds,
+          },
+        })
+        .then((result) => (result === 'OK' ? 1 : 0))
+        .catch(() => 0),
+    );
+    const results = await Promise.all(promises);
     if (results.reduce(smartSum, 0) >= quorum) {
-      debug(key, identifier, 'acquired')
-      return true
-    } else {
-      const promises = clients.map(client =>
-        delIfEqualLua(client, [key, identifier]).catch(() => 0)
-      )
-      await Promise.all(promises)
-      await delay(retryInterval)
+      debug(key, identifier, 'acquired');
+      return true;
     }
+    promises = clients.map((client) => delIfEqualLua(client, [key, identifier]).catch(() => 0));
+    await Promise.all(promises);
+    await delay(retryInterval);
   }
-  debug(key, identifier, 'timeout or reach limit')
-  return false
+  debug(key, identifier, 'timeout or reach limit');
+  return false;
 }

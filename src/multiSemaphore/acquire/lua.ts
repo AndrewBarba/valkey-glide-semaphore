@@ -1,9 +1,6 @@
-import { createEval } from '../../utils/index'
+import { createEval } from '../../utils/index';
 
-export const acquireLua = createEval<
-  [string, number, number, string, number, number],
-  0 | 1
->(
+export const acquireLua = createEval<[string, number, number, string, number, number], 0 | 1>(
   `
   local key = KEYS[1]
   local limit = tonumber(ARGV[1])
@@ -27,5 +24,5 @@ export const acquireLua = createEval<
   else
     return 0
   end`,
-  1
-)
+  1,
+);

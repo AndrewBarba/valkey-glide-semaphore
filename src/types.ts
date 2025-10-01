@@ -1,39 +1,32 @@
-import LostLockError from './errors/LostLockError'
-import { Lock } from './Lock'
-
-import type * as ioredis from 'ioredis'
+import type { GlideClient } from '@valkey/valkey-glide';
+import type LostLockError from './errors/LostLockError';
+import type { Lock } from './Lock';
 
 /**
  * ioredis-like Redis client
  */
-export type RedisClient = Pick<
-  ioredis.Redis,
-  'eval' | 'evalsha' | 'get' | 'set' | 'zrem'
-> &
-  Partial<Pick<ioredis.Redis, 'options'>>
+export type RedisClient = GlideClient;
 
-export interface LockLostCallback {
-  (this: Lock, err: LostLockError): void
-}
+export type LockLostCallback = (this: Lock, err: LostLockError) => void;
 
 export interface TimeoutOptions {
-  lockTimeout?: number
-  acquireTimeout?: number
-  acquireAttemptsLimit?: number
-  retryInterval?: number
-  refreshInterval?: number
+  lockTimeout?: number;
+  acquireTimeout?: number;
+  acquireAttemptsLimit?: number;
+  retryInterval?: number;
+  refreshInterval?: number;
 }
 
 export interface LockOptions extends TimeoutOptions {
   /**
    * @deprecated Use `identifier` + `acquiredExternally: true` instead. Will be removed in next major release.
    */
-  externallyAcquiredIdentifier?: string
+  externallyAcquiredIdentifier?: string;
 
   /**
    * @deprecated Provide custom `identifier` instead. Will be removed in next major release.
    */
-  identifierSuffix?: string
+  identifierSuffix?: string;
 
   /**
    * Identifier of lock. By default is `crypto.randomUUID()`.
@@ -42,22 +35,22 @@ export interface LockOptions extends TimeoutOptions {
    *
    * Override only if you know what you are doing, see `acquireExternally` option.
    */
-  identifier?: string
+  identifier?: string;
 
   /**
    * If `identifier` provided and `acquiredExternally` is `true` then `_refresh` will be used instead of `_acquire` in `.tryAcquire()`/`.acquire()`.
    *
    * Useful for lock sharing between processes: acquire in scheduler, refresh and release in handler.
    */
-  acquiredExternally?: true
+  acquiredExternally?: true;
 
-  onLockLost?: LockLostCallback
+  onLockLost?: LockLostCallback;
 }
 
 export interface AcquireOptions {
-  identifier: string
-  lockTimeout: number
-  acquireTimeout: number
-  acquireAttemptsLimit: number
-  retryInterval: number
+  identifier: string;
+  lockTimeout: number;
+  acquireTimeout: number;
+  acquireAttemptsLimit: number;
+  retryInterval: number;
 }

@@ -1,4 +1,4 @@
-import { createEval } from '../../utils/index'
+import { createEval } from '../../utils/index';
 
 export const releaseLua = createEval<[string, number, string], number>(
   `
@@ -13,5 +13,5 @@ export const releaseLua = createEval<[string, number, string], number>(
 
   return redis.call('zrem', key, unpack(args))
 `,
-  1
-)
+  1,
+);

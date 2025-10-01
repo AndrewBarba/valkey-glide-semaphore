@@ -63,6 +63,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# macos
+.DS_Store
+
 es
 lib
 /.idea/
